@@ -1,8 +1,8 @@
 package com.example.validatingforminput;
 
 import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,12 +24,12 @@ public class WebController implements WebMvcConfigurer {
 	}
 
 	@PostMapping("/")
-	public String checkPersonInfo(@Valid PersonForm personForm, BindingResult bindingResult) {
+	public String checkPersonInfo(  Model model, @Valid PersonForm personForm,BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
 			return "form";
 		}
-
-		return "redirect:/results";
+		model.addAttribute("personFrom", personForm);
+		return "results";
 	}
 }
